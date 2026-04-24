@@ -31,15 +31,20 @@ function RotatingGlobe() {
   const particlesCount = 2000;
   const positions = useMemo(() => {
     const arr = new Float32Array(particlesCount * 3);
+    const radius = 2.6;
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
     for (let i = 0; i < particlesCount; i++) {
-        // Spherical distribution
-        const r = 2.6; // Slightly larger than the solid sphere
-        const theta = 2 * Math.PI * Math.random();
-        const phi = Math.acos(2 * Math.random() - 1);
-        arr[i * 3] = r * Math.sin(phi) * Math.cos(theta); // x
-        arr[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta); // y
-        arr[i * 3 + 2] = r * Math.cos(phi); // z
+      // Deterministic Fibonacci-sphere distribution avoids random generation in render.
+      const y = 1 - (i / (particlesCount - 1)) * 2;
+      const ringRadius = Math.sqrt(1 - y * y);
+      const theta = goldenAngle * i;
+
+      arr[i * 3] = radius * ringRadius * Math.cos(theta);
+      arr[i * 3 + 1] = radius * y;
+      arr[i * 3 + 2] = radius * ringRadius * Math.sin(theta);
     }
+
     return arr;
   }, []);
 
