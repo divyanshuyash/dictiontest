@@ -355,17 +355,20 @@ export default function AnimatedHero() {
           >
             <header className="absolute inset-x-0 top-0 z-10 px-5 py-5 sm:px-7 sm:py-6 md:px-10 lg:px-12">
               <div className="flex items-center justify-between gap-5">
-              <Link href="/" aria-label="Diction home" className="block w-[7.5rem] sm:w-[9rem] md:w-[10.5rem]">
-                <Image
-                  src="/diction-logo.png"
-                  alt="Diction"
-                  width={2172}
-                  height={724}
-                  className="h-auto w-full object-contain"
-                  loading="eager"
-                  sizes="(min-width: 768px) 168px, (min-width: 640px) 144px, 120px"
-                />
-              </Link>
+                <Link
+                  href="/"
+                  aria-label="Diction home"
+                  className="relative block h-6 w-[8.5rem] shrink-0 overflow-hidden sm:h-7 sm:w-[10rem] md:h-8 md:w-[11.5rem]"
+                >
+                  <Image
+                    src="/ChatGPT_Image_Aug_18__2026__11_36_22_PM-removebg-preview.png"
+                    alt="Diction"
+                    fill
+                    className="object-cover object-center"
+                    loading="eager"
+                    sizes="(min-width: 768px) 184px, (min-width: 640px) 160px, 136px"
+                  />
+                </Link>
 
               <nav
                 aria-label="Primary navigation"
