@@ -1,86 +1,60 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
-  const [progress, setProgress] = useState(1);
-  const [stage, setStage] = useState<"loading" | "expanding" | "done">("loading");
+  const [visible, setVisible] = useState(true);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    // Ultra-fast entrance count from 1 to 100
-    const duration = 900; 
-    const intervalTime = 15;
-    const steps = duration / intervalTime;
-    let currentStep = 0;
+    if (shouldReduceMotion) {
+      const frame = requestAnimationFrame(() => {
+        setVisible(false);
+        onComplete();
+      });
+      return () => cancelAnimationFrame(frame);
+    }
 
-    const interval = setInterval(() => {
-      currentStep++;
-      if (currentStep >= steps) {
-        setProgress(100);
-        clearInterval(interval);
-      } else {
-        const nextProgress = Math.floor((currentStep / steps) * 100);
-        setProgress(nextProgress);
-      }
-    }, intervalTime);
+    const timeout = setTimeout(() => {
+      setVisible(false);
+      onComplete();
+    }, 1000);
 
-    // After reaching 100%, trigger the majestic purple screen wipe extremely quickly
-    const timeout1 = setTimeout(() => {
-      setStage("expanding");
-      onComplete(); // Signals to page.tsx to fade in everything else
-    }, 1100);
-
-    // Completely unmount after wipe
-    const timeout2 = setTimeout(() => {
-      setStage("done");
-    }, 2000);
-
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeout1);
-      clearTimeout(timeout2);
-    };
-  }, [onComplete]);
+    return () => clearTimeout(timeout);
+  }, [onComplete, shouldReduceMotion]);
 
   return (
     <AnimatePresence>
-      {stage !== "done" && (
+      {visible && (
         <motion.div
-          className="fixed inset-0 z-50 flex flex-col md:flex-row items-center justify-between px-10 md:px-20 bg-[#0a0a0a] overflow-hidden"
+          className="fixed inset-0 z-50 grid place-items-center bg-[#050505] px-8"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Subtle LOADING typography on exactly Fandom specs */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: stage === "loading" ? 1 : 0, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-[#555] text-lg md:text-xl font-mono tracking-widest z-10 w-full md:w-auto text-left mb-10 md:mb-0 uppercase"
-          >
-            Loading Initial Sequences...
-          </motion.div>
-
-          {/* Majestic 1-100% Counter */}
-          <motion.div
-            layout
-            animate={{ opacity: stage === "loading" ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-            className="w-full md:w-auto text-accent text-[20vw] md:text-[15vw] font-black leading-none text-right z-10 tracking-tighter"
-          >
-            {progress}%
-          </motion.div>
-
-          {/* Expanding Circle Transition strictly matching reference */}
-          {stage === "expanding" && (
-            <motion.div
-              initial={{ scale: 0, opacity: 1 }}
-              animate={{ scale: 150, opacity: 0 }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[10vw] h-[10vw] bg-accent rounded-full pointer-events-none"
-              style={{ mixBlendMode: "screen" }}
+          <div className="w-full max-w-xs text-center">
+            <Image
+              src="/diction-wordmark.png"
+              alt="Diction"
+              width={2155}
+              height={730}
+              className="mx-auto h-auto w-52 object-contain sm:w-60 md:w-72"
+              loading="eager"
+              sizes="(min-width: 768px) 288px, (min-width: 640px) 240px, 208px"
             />
-          )}
+            <p className="mt-8 text-[0.6rem] font-semibold uppercase tracking-[0.28em] text-white/38">
+              Loading
+            </p>
+            <div className="mt-3 h-px overflow-hidden bg-white/10" aria-hidden="true">
+              <motion.div
+                className="h-full origin-left bg-[#a855f7]"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.9, ease: [0.4, 0, 0.2, 1] }}
+              />
+            </div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
