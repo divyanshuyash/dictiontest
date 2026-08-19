@@ -1,0 +1,25 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import PageHeader from "@/components/PageHeader";
+import PageFooter from "@/components/PageFooter";
+import PageIntro from "@/components/PageIntro";
+import CallToAction from "@/components/CallToAction";
+
+export const metadata: Metadata = { title: "Success Stories", description: "Explore the kinds of founder and expert transformation Diction is designed to create, with process before claims." };
+
+const patterns = [
+  { type: "Founder authority system", before: "Credible work, broad messaging and a website organised around services.", shift: "A single expertise association, clear audience language and proof connected to a relevant next step.", system: "Positioning → founder story → website trust journey → authority content." },
+  { type: "Consultant positioning reset", before: "Strong delivery, interchangeable category language and content without a point of view.", shift: "A distinct perspective made visible through repeated ideas, examples and a recognisable voice.", system: "Positioning → point-of-view themes → evidence library → content formats." },
+  { type: "Expert platform alignment", before: "Useful profiles and assets that each communicate a slightly different identity.", shift: "One position and one visual-verbal system repeated across the website, profiles and follow-up.", system: "Platform roles → profile alignment → lead journey → nurture path." },
+];
+
+export default function SuccessStoriesPage() {
+  return (
+    <main className="bg-[#080808] text-white"><PageHeader /><PageIntro eyebrow="Success stories" title="What changes when the system connects." description="Diction evaluates progress through clarity, recognition, trust and better opportunity pathways—not through isolated deliverables or attention metrics alone." primary={{ label: "See the process", href: "#stories" }} secondary={{ label: "Explore capabilities", href: "/capabilities" }} />
+      <section className="section-pad bg-[#f1eee8] px-6 text-[#111] md:px-10"><div className="mx-auto grid max-w-[1220px] gap-12 lg:grid-cols-[1fr_1fr] lg:items-center"><div className="relative aspect-[4/3] overflow-hidden rounded-[2rem]"><Image src="/stock-masterclass-stage.jpg" alt="Speaker sharing ideas with a live audience" fill className="object-cover" sizes="(min-width: 1024px) 50vw, 100vw" /></div><div><p className="section-label text-[#7134cb]">Proof with context</p><h2 className="editorial-heading mt-7">Process before performance claims.</h2><p className="body-large mt-7 text-black/52">The story that matters is not “we made a website.” It is what was unclear before, which gap constrained the system, what changed and how the new experience supports recognition or opportunity.</p><p className="mt-6 border-l-2 border-[#7134cb] pl-5 text-sm leading-relaxed text-black/45">Verified, named client stories and metrics should only be published with permission and source evidence. Until that library is approved, the examples below describe engagement patterns rather than client claims.</p><p className="mt-4 text-[10px] uppercase tracking-[0.1em] text-black/32">Stock photography: Matheus Bertelli / Pexels</p></div></div></section>
+      <section id="stories" className="section-pad px-6 md:px-10"><div className="mx-auto max-w-[1220px]"><div className="grid gap-8 border-b border-white/10 pb-10 lg:grid-cols-2 lg:items-end"><h2 className="editorial-heading">Representative transformation patterns.</h2><p className="text-sm leading-relaxed text-white/42 lg:justify-self-end">These are not testimonials or performance claims. They show the kind of before-to-after logic a documented case study should make visible.</p></div><div className="mt-10 grid gap-4">{patterns.map((pattern, index) => <article key={pattern.type} className="rounded-[1.8rem] border border-white/10 bg-white/[0.025] p-7 md:p-9"><div className="grid gap-7 lg:grid-cols-[90px_0.8fr_1.05fr_1.15fr]"><span className="text-xs font-bold text-[#bd84ff]">0{index + 1}</span><div><p className="section-label text-white/28">Pattern</p><h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">{pattern.type}</h3></div><div><p className="section-label text-white/28">Before → shift</p><p className="mt-4 text-sm leading-relaxed text-white/50">{pattern.before}</p><p className="mt-4 text-sm leading-relaxed text-white/72">{pattern.shift}</p></div><div><p className="section-label text-white/28">Connected system</p><p className="mt-4 text-sm font-semibold leading-relaxed text-[#d6b8ff]">{pattern.system}</p></div></div></article>)}</div><Link href="/capabilities" className="text-link mt-10">See what Diction can implement <ArrowRight size={14} /></Link></div></section>
+      <CallToAction title="Your gap should determine the work—not the other way around." body="Use the Digital Presence Score to identify the part of your system that needs attention first." href="/tools/digital-presence-score" label="Discover my score" /><PageFooter /></main>
+  );
+}

@@ -22,10 +22,10 @@ const GlobeCanvas = dynamic(() => import("./GlobeCanvas"), {
 
 const heroNavigation = [
   { label: "Home", href: "/" },
-  { label: "Free Tools", href: "/#free-tools" },
-  { label: "Success Stories", href: "/#success-stories" },
-  { label: "Insights", href: "/#insights" },
-  { label: "About", href: "/#about" },
+  { label: "Free Tools", href: "/tools" },
+  { label: "Success Stories", href: "/success-stories" },
+  { label: "Insights", href: "/insights" },
+  { label: "About", href: "/about" },
 ];
 
 export default function AnimatedHero() {
@@ -437,10 +437,10 @@ export default function AnimatedHero() {
 
             <div className="absolute inset-x-0 bottom-0 flex justify-end px-5 pb-[max(1.35rem,env(safe-area-inset-bottom))] sm:px-7 sm:pb-7 md:px-10 md:pb-9 lg:px-12 lg:pb-10">
               <div className="flex max-w-full flex-col items-stretch gap-2.5 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
-                <Link href="/known#register" className="button-light min-h-11 max-w-full px-4 text-center text-[0.54rem] sm:min-h-12 sm:px-5 sm:text-[0.62rem]">
+                <Link href="/register" className="button-light min-h-11 max-w-full px-4 text-center text-[0.54rem] sm:min-h-12 sm:px-5 sm:text-[0.62rem]">
                   Join the Free KNOWN Masterclass <ArrowRight size={15} aria-hidden="true" />
                 </Link>
-                <Link href="/known" className="button-ghost min-h-11 max-w-full px-4 text-center text-[0.54rem] sm:min-h-12 sm:px-5 sm:text-[0.62rem]">
+                <Link href="/tools/digital-presence-score" className="button-ghost min-h-11 max-w-full px-4 text-center text-[0.54rem] sm:min-h-12 sm:px-5 sm:text-[0.62rem]">
                   Discover My Digital Presence Score
                 </Link>
               </div>
